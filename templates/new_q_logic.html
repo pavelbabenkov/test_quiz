@@ -1,0 +1,33 @@
+{% load static %}<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Write a new question</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <ol class="breadcrumb my-4">
+             <li class="breadcrumb-item"><a href="{% url 'home' %}">Tasks</a></li>
+             <li class="breadcrumb-item"><a href="{% url 'task_questions' task.pk %}">{{ task.name }}</a></li>
+             <li class="breadcrumb-item active">New question</li>
+        </ol>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_question">Question</label>
+                <textarea class="form-control" id="id_question" name="question" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="id_answer">Answer</label>
+                <select class="form-control" id="id_answer" name="answer">
+                    <option value=1>True</option>
+                    <option value=0>False</option>
+                 </select>
+            </div>
+            <button type="submit" class="btn btn-success">Save question</button>
+        </form>
+    </div>
+</body>
+</html>

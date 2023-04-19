@@ -1,0 +1,48 @@
+{% load static %}<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit question</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <ol class="breadcrumb my-4">
+             <li class="breadcrumb-item"><a href="{% url 'home' %}">Tasks</a></li>
+             <li class="breadcrumb-item"><a href="{% url 'task_questions' q_choose_option.task.pk %}">{{ q_choose_option.task.name }}</a></li>
+             <li class="breadcrumb-item active">Edit question</li>
+        </ol>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_question">Question</label>
+                <textarea class="form-control" id="id_question" name="question" rows="3">{{ q_choose_option.q_text }}</textarea>
+            </div>
+
+            {% for q_choose_option_answer in q_choose_option.q_choose_option_answers.all %}
+
+            <div class="form-group">
+                <label for="id_answer">Answer #{{q_choose_option_answer.option_n}}</label>
+                <textarea class="form-control" id="id_answer" name="answer_{{ forloop.counter }}" rows="1">{{ q_choose_option_answer.q_text }}</textarea>
+            </div>
+
+            {% endfor %}
+            <hr/>
+            <div class="form-group">
+                <label for="id_answer">Correct answer</label>
+                <select class="form-control" id="id_answer" name="correct_answer">
+                    {% for q_choose_option_answer in q_choose_option.q_choose_option_answers.all %}
+                         <option value={{ forloop.counter }} {% if q_choose_option_answer.correct_answer == True %}selected{% endif %}>Answer #{{ forloop.counter }} </option>
+                    {% endfor %}
+                 </select>
+            </div>
+
+            <hr/>
+
+            <button type="submit" class="btn btn-success">Save question</button>
+        </form>
+    </div>
+</body>
+</html>
